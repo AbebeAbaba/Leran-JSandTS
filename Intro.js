@@ -12,3 +12,177 @@ console.table(JSandJava);
 //var 再代入再宣言可能　巻き上げのため限りなく先頭に置くとよい
 //let ブロックスコープ 再代入可能
 //const ブロックスコープ　再代入再宣言不可
+
+//グローバル変数 window.変数名
+
+//データ型変換可能
+let answer = 42;
+answer = "Thanks for all the fish!";
+
+//文字列から数値変換
+parseInt()
+parseFloat()
+Number()
+
+//配列リテラル
+const coffees = ["French Roast", "Colombian", "Kona"];
+const myList = ["home", , "school", ,]; //length 4
+
+//拡張オブジェクトリテラル
+const obj = {
+  // __proto__
+  __proto__: theProtoObj, //プロトタイプ継承
+  // 短い 'handler: handler' の形式
+  handler, //handler: handler 同名なら短縮可能
+  // メソッド
+  toString() { //toString: function () {
+    // スーパークラスの呼び出し
+    return `d ${super.toString()}`;
+  },
+  // 計算による（動的な）プロパティ名
+  ["prop_" + (() => 42)()]: 42,
+};
+
+// ホワイトスペースを含む文字列の文字の数を出力する。
+console.log("Joyo's cat".length); // この場合は 10 が出力される。
+
+//同じ出力 
+"Hello " + name
+`Hello ${name}`
+
+
+/* by MDN
+\0	ヌル文字
+\b	バックスペース
+\f	改ページ
+\n	改行
+\r	復帰
+\t	タブ
+\v	垂直タブ
+\'	アポストロフィまたは単一引用符
+\"	二重引用符
+\\	バックスラッシュ (\)
+\XXX	Latin-1 エンコーディングの文字を 3 桁以下の 8 進数で指定したもので、XXX の部分は 0 ～ 377 の範囲です。例えば、\251 は著作権記号を示します。
+\xXX	Latin-1 エンコーディングの文字を 2 桁の 16 進数で指定したもので、XX の形で、00 ～ FF の範囲です。例えば、\xA9 は著作権記号を示します。
+\uXXXX	Unicode 文字を 4 桁の 16 進数 XXXX 指定したものです。例えば、\u00A9 は著作権記号を示します。Unicode エスケープシーケンスをご覧ください。
+\u{XXXXX}	Unicode コードポイントエスケープです。 例えば \u{2F804} は Unicode エスケープである \uD87E\uDC04 と同じです。
+*/
+
+const str =
+  "this string \
+is broken \
+across multiple \
+lines.";
+console.log(str); // この文字列は複数行にわたって分解されます。 つまり一文で出力
+
+//例外発生
+throw expression; // expressionは例外オブジェクト
+
+function getMonthName(mo) {
+  mo--; // 月の数字を配列のインデックスに合わせる (0 = Jan, 11 = Dec)
+  // prettier-ignore
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+  ];
+  if (!months[mo]) {
+    throw new Error("Invalid month code"); //throwで例外発生 -> catch(例外オブジェクト){}
+  }
+  return months[mo];
+}
+
+try {
+  // 実行を試みる文
+  monthName = getMonthName(myMonth); // この関数が例外を投げる場合がある
+} catch (e) {
+  monthName = "unknown";
+  logMyErrors(e); // 例外オブジェクトeをエラーハンドラーに渡す
+}
+
+//finally 例外が発生したかにかかわらず実行される
+function f() {
+  try {
+    console.log(0);
+    throw "bogus";
+  } catch (e) {
+    console.log(1);
+    // この返値は、finally ブロックが
+    // 完了するまで保留となる
+    return true;
+    console.log(2); // 到達しない
+  } finally {
+    console.log(3);
+    return false; // 直前の "return" が上書きされる
+    // ここで `f` から出る
+    console.log(4); // 到達しない
+  }
+  console.log(5); // 到達しない
+}
+console.log(f()); // 0, 1, 3, false
+
+//do{} while()   while()と違い、do()実行後にwhile()の条件判定を行うため while()がfalseでも1回は実行される
+let i = 0;
+do {
+  i += 1;
+  console.log(i);
+} while (i < 5);
+
+/*ラベル文
+label:
+      statement
+break label; lbaelを終了させる  continue label; も可能
+*/
+let x = 0;
+let z = 0;
+labelCancelLoops: while (true) {
+  console.log("外側のループ: " + x);
+  x += 1;
+  z = 1;
+  while (true) {
+    console.log("内側のループ: " + z);
+    z += 1;
+    if (z === 10 && x === 10) {
+      break labelCancelLoops;
+    } else if (z === 10) {
+      break;
+    }
+  }
+}
+
+//for 変数 in オブジェクト オブジェクトの列挙可能なプロパティ分ループ
+const user = {
+  name: "Taro",
+  age: 20,
+  country: "Japan"
+};
+
+for (const key in user) {
+  console.log(key);
+} // name, age, country
+
+//for 変数 of オブジェクト 配列や文字列などの反復可能なオブジェクト分ループ 変数には値が入る
+//以下はfor in とfor ofの違いの例
+const arr = [3, 5, 7];
+arr.foo = "hello";
+
+for (const i in arr) {
+  console.log(i);
+}
+// "0" "1" "2" "foo"
+
+for (const i of arr) {
+  console.log(i);
+}
+// Logs: 3 5 7
+
+//関数式 変数に関数を代入 関数を引数として渡すこともできる　また関数式は他変数と同様に宣言前に呼び出すことができない
+const factorial = function fac(n) {
+  return n < 2 ? 1 : n * fac(n - 1);
+};
+
+console.log(factorial(3)); // 6
+
+//無名関数 関数式としても宣言式としても使用できる　一度しか使わない場合が多い
+const f = function () {
+  console.log("hi");
+};
