@@ -186,3 +186,86 @@ console.log(factorial(3)); // 6
 const f = function () {
   console.log("hi");
 };
+
+//クロージャ
+// 外側の関数は変数 "name" を定義
+const pet = function (name) {
+  const getName = function () {
+    // 内側の関数は外側の関数の変数 "name" にアクセス可能
+    return name;
+  };
+  return getName; // 内側の関数を返すことで、外側の関数に公開する
+};
+const myPet = pet("Vivie");
+
+console.log(myPet()); // "Vivie"
+
+//多重入れ子関数
+/*関数 B と C はクロージャとなるので、 B は A にアクセスでき、 C は B にアクセスできます。
+さらに、 C は A にアクセス可能な B にアクセスできるので、 C は A にもアクセスできます。
+このようにして、クロージャは多重スコープを導入できます。つまり関数のスコープが再帰的に包含されているのです。これを「スコープチェーン」と呼びます [MDN]
+
+function B(y), function C(z)は定義のみで呼び出しではないため、関数 A の実行が完了するまで呼び出されない。つまり、関数 A の実行が完了するまでは、関数 B と C は定義されているだけで、実際には呼び出されません。
+*/
+function A(x) {
+  function B(y) {
+    function C(z) {
+      console.log(x + y + z);
+    }
+    C(3);
+  }
+  B(2);
+}
+A(1); // 6 がログに出力される (1 + 2 + 3)
+
+
+//onsole.log(outside()(10)) = outside() inside(10)
+function outside() {
+  const x = 5;
+  function inside(x) {
+    return x * 2;
+  }
+  return inside;
+}
+
+console.log(outside()(10)); // 10 ではなく 20 を返す
+
+//arguments オブジェクトの使用
+function myConcat(separator) {
+  let result = ""; // リストを初期化する
+  // 引数について繰り返し
+  for (let i = 1; i < arguments.length; i++) {
+    result += arguments[i] + separator;
+  }
+  return result;
+}
+
+//(", ", "red", "orange", "blue")を配列のように扱ってる
+console.log(myConcat(", ", "red", "orange", "blue"));
+// "red, orange, blue, "
+
+console.log(myConcat("; ", "elephant", "giraffe", "lion", "cheetah"));
+// "elephant; giraffe; lion; cheetah; "
+
+console.log(myConcat(". ", "sage", "basil", "oregano", "pepper", "parsley"));
+// "sage. basil. oregano. pepper. parsley. "
+
+//デフォルト引数
+//b がundefinedのとき、bに1を代入する
+function multiply(a, b) {
+  b = typeof b !== "undefined" ? b : 1;
+  return a * b;
+}
+
+console.log(multiply(5)); // 5
+
+//残余引数
+//引数を逐一指定するのではなく、可変長引数を受け取ることができる
+function multiply(multiplier, ...theArgs) {
+  return theArgs.map((x) => multiplier * x);
+}
+
+const arr = multiply(2, 1, 2, 3);
+console.log(arr); // [2, 4, 6]
+
+//アロー関数
