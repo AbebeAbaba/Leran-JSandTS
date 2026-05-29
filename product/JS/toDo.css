@@ -1,3 +1,15 @@
 #result {
     white-space: pre-line;
 }
+
+body { font-family: Arial, Helvetica, sans-serif; padding: 20px; }
+.container { max-width: 640px; margin: 0 auto; }
+label { display:block; margin-top:12px; font-weight:600; }
+input[type="text"], input[type="date"], textarea {
+    width:100%; padding:8px; box-sizing:border-box; margin-top:6px; border:1px solid #ccc; border-radius:4px;
+}
+textarea { min-height:100px; resize:vertical; }
+.actions { margin-top:12px; }
+button { padding:8px 14px; border:none; background:#0069d9; color:#fff; border-radius:4px; cursor:pointer; }
+button:disabled { opacity:0.6; cursor:not-allowed }
+.msg { margin-top:12px; color:green }
