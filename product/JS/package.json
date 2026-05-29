@@ -1,0 +1,22 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "for toDo",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbebeAbaba/Learn-JSandTS.git"
+  },
+  "author": "AbebeAbaba",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbebeAbaba/Learn-JSandTS/issues"
+  },
+  "homepage": "https://github.com/AbebeAbaba/Learn-JSandTS#readme",
+  "dependencies": {
+    "@google/genai": "^2.7.0"
+  }
+}
